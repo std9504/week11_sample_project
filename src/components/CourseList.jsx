@@ -6,6 +6,7 @@ export default function CourseList() {
   // [제공] 초기 배열을 useState로 관리합니다.
   const [courses, setCourses] = useState(initialCourses);
   const [newName, setNewName] = useState('');
+  const [category, setCategory] = useState('Major')
 
   // [제공] 삭제 기능: filter로 새 배열을 만들어 업데이트합니다.
   function handleDelete(id) {
@@ -17,11 +18,20 @@ export default function CourseList() {
   function handleAdd(event) {
     event.preventDefault();
     // TODO: 빈 입력 검사, 새 과목 객체 생성, setCourses 호출, 입력창 초기화
+    if(newName === ''){
+      alert("과목명을 입력하세요.");
+      return;
+    }
+    const newCourse = { id: courses.length > 0 ? courses[courses.length - 1].id + 1 : 1, name: newName, category: category, completed: false };
+    setCourses([...courses, newCourse]);
+
+    setNewName('');
   }
 
   // TODO 2 (필수): 완료 상태 변경 기능을 구현하세요.
   function handleToggle(id) {
     // TODO: map과 spread(...)를 사용하여 해당 id의 completed를 반전
+    setCourses(previous => previous.map(course => course.id === id ? {...course, completed: !course.completed} : course));
   }
 
   const doneCount = courses.filter(course => course.completed).length;
@@ -38,6 +48,10 @@ export default function CourseList() {
         <p className="todo">실습 과제: 아래 Add 버튼과 완료 체크박스의 기능을 직접 구현하세요.</p>
         <form className="add-form" onSubmit={handleAdd}>
           <input className="input" value={newName} onChange={event => setNewName(event.target.value)} placeholder="새 과목명을 입력하세요" aria-label="새 과목명" />
+          <select className="btn secondary dropdown" value={category} onChange={event => setCategory(event.target.value)}>
+            <option value="Major">Major</option>
+            <option value="Elective">Elective</option>
+          </select>
           <button className="btn primary" type="submit">+ Add Course</button>
         </form>
         <div className="list-head"><span>COURSE</span><span>CATEGORY</span><span>ACTIONS</span></div>
