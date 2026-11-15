@@ -50,12 +50,16 @@
 - 과목명 수정 기능: ./src/components/CourseList.jsx:34-38, 48-53
 목록의 edit 버튼을 누르면 과목명 입력 칸에 선택한 과목명이 뜨고, 편집버튼을 누르면 기존 객체에 변경사항이 적용됨.
 
+
 ## Deployment: 실제 접근 가능한 Vercel URL
 
+[Vercel URL](https://assign11-seven.vercel.app/)
 
 
 ## Weekly Review:
-1. 새롭게 배운 내용 3가지
-2. 어려웠던 점과 해결 방법
-3. AI 활용 내용 및 느낀 점
-설명할 코드 선택, add할때 id파트랑 map 구현할때 ? 이 문법, 드롭다운구현, filter+includes
+
+1. 새롭게 배운 내용 3가지 : useState 사용법, 부모-자식 컴포넌트와 props, 새로운 JS 문법 
+
+2. 어려웠던 점과 해결 방법 : map, spread, filter등 배열을 다루는 JS문법의 사용이 어려웠음. 내맘대로 코드를 작성해보고 AI의 답과 비교해보면서 공부함.
+
+3. AI 활용 내용 및 느낀 점 : Create 나 Edit 파트 등에서 삼항연산자를 사용해 깔끔한 코드로 변환, 드롭다운 구현, filter+includes 사용법, 미완료 표시기능과 검색기능을 병합. 구현하고자하는 바가 있는데 문법을 모르면 답답하고 어디서부터 찾아야 할지 막막한데 내가 원하는 구조를 말하면 알맞는 기능들을 알려주니까 편하다.
