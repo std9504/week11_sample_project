@@ -7,6 +7,9 @@ export default function CourseList() {
   const [courses, setCourses] = useState(initialCourses);
   const [newName, setNewName] = useState('');
   const [category, setCategory] = useState('Major')
+  const [selectedID, setSelectID] = useState(null);
+  const [search, setSearch] = useState('');
+  const [onlyUncomplete, setOnlyUncomplete] = useState(false);
 
   // [제공] 삭제 기능: filter로 새 배열을 만들어 업데이트합니다.
   function handleDelete(id) {
@@ -22,9 +25,17 @@ export default function CourseList() {
       alert("과목명을 입력하세요.");
       return;
     }
-    const newCourse = { id: courses.length > 0 ? courses[courses.length - 1].id + 1 : 1, name: newName, category: category, completed: false };
-    setCourses([...courses, newCourse]);
 
+    if(selectedID === null){
+      //add
+      const newCourse = { id: courses.length > 0 ? courses[courses.length - 1].id + 1 : 1, name: newName, category: category, completed: false };
+      setCourses([...courses, newCourse]);
+    }
+    else {
+      //edit part
+      setCourses(previous => previous.map(course => course.id === selectedID ? {...course, name: newName, category: category} : course));
+      setSelectID(null);
+    }
     setNewName('');
   }
 
@@ -33,6 +44,29 @@ export default function CourseList() {
     // TODO: map과 spread(...)를 사용하여 해당 id의 completed를 반전
     setCourses(previous => previous.map(course => course.id === id ? {...course, completed: !course.completed} : course));
   }
+
+  //과목명 수정 기능
+  function handleEdit(id) {
+    const selected = courses.find(course => course.id === id);
+    setNewName(selected.name);
+    setSelectID(id);
+  }
+
+  //미완료 표시
+  // const filteredCourses = onlyUncomplete
+  // ? courses.filter(course => !course.completed)
+  // : courses;
+
+  //검색
+  // const filteredCourses = courses.filter(course =>
+  //   course.name.toLowerCase().includes(search.toLowerCase())
+  // );
+
+  //완료/미완료 필터링 + 과목명 검색 기능
+  const filteredCourses = courses.filter(course =>
+    (!onlyUncomplete || !course.completed) &&
+    course.name.toLowerCase().includes(search.toLowerCase())
+  );
 
   const doneCount = courses.filter(course => course.completed).length;
 
@@ -52,12 +86,17 @@ export default function CourseList() {
             <option value="Major">Major</option>
             <option value="Elective">Elective</option>
           </select>
-          <button className="btn primary" type="submit">+ Add Course</button>
+          <button className="btn primary" type="submit">{selectedID !== null ? 'Edit Course' : '+ Add Course'}</button>
         </form>
+        <div className="filter">
+          <input className="check" type="checkbox" checked={onlyUncomplete} onChange={event => setOnlyUncomplete(event.target.checked)}/>
+          <label>미완료 과목만 표시</label>
+          <input className="input" value={search} onChange={event => setSearch(event.target.value)} placeholder='과목명으로 검색'/>
+        </div>
         <div className="list-head"><span>COURSE</span><span>CATEGORY</span><span>ACTIONS</span></div>
         {courses.length === 0 && <div className="empty">등록된 과목이 없습니다.</div>}
-        {courses.map(course => (
-          <CourseItem key={course.id} course={course} onDelete={handleDelete} onToggle={handleToggle} />
+        {filteredCourses.map(course => (
+          <CourseItem key={course.id} course={course} onDelete={handleDelete} onToggle={handleToggle} onEdit={handleEdit}/>
         ))}
       </section>
     </>

@@ -239,6 +239,7 @@ body {
   width: 20px;
   height: 20px;
   cursor: pointer;
+  flex-shrink: 0;
 }
 .empty {
   padding: 34px 10px;
@@ -273,6 +274,18 @@ body {
 .edit-actions {
   display: flex;
   gap: 6px;
+}
+.filter {
+  display: flex;
+  align-items: center;
+  height: 30px;
+  margin: 40px 15px 20px 15px;
+}
+.filter label{
+  font-size: 14px;
+  color: #526782;
+  width: 100%;
+  padding-left: 8px;
 }
 @media (max-width: 620px) {
   .page {
@@ -329,5 +342,9 @@ body {
   }
   .select {
     width: 100%;
+  }
+  .dropdown{
+    width: 100%;
+    text-align: center;
   }
 }

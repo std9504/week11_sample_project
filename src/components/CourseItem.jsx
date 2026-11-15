@@ -1,5 +1,5 @@
 // [제공] 부모 CourseList로부터 Props를 전달받는 자식 컴포넌트입니다.
-export default function CourseItem({ course, onDelete, onToggle }) {
+export default function CourseItem({ course, onDelete, onToggle, onEdit }) {
   return (
     <div className="course-row">
       <div className="course-main">
@@ -21,6 +21,7 @@ export default function CourseItem({ course, onDelete, onToggle }) {
         <span className="category">{course.category}</span>
       </div>
       <div className="actions">
+        <button className="btn secondary" type="button" onClick={() => onEdit(course.id)}>Edit</button>
         <button
           className="btn danger"
           type="button"
